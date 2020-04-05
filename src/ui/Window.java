@@ -96,6 +96,7 @@ public class Window extends JFrame {
                 input_sender_id.setText("");
                 input_name.setText("");
                 input_address.setText("");
+                error_label.setText("");
             } catch (SQLException e) {
                 error_label.setText("ERROR:" + getErrorMessage(e));
             }
@@ -117,6 +118,7 @@ public class Window extends JFrame {
                 ResultSet table = dbHandler.delete(input_vehicle_id.getText());
                 renderTable(table, "Showing VEHICLE table after delete operation", delete);
                 input_vehicle_id.setText("");
+                error_label.setText("");
             } catch (SQLException e) {
                 error_label.setText("ERROR:" + getErrorMessage(e));
             }
@@ -145,6 +147,7 @@ public class Window extends JFrame {
                 input_sender_id.setText("");
                 input_name.setText("");
                 input_address.setText("");
+                error_label.setText("");
             } catch (SQLException e) {
                 error_label.setText("ERROR:" + getErrorMessage(e));
             }
@@ -170,6 +173,7 @@ public class Window extends JFrame {
                             "Showing package IDs of all packages with weight >= " + input_weight.getText(),
                             select);
                     input_weight.setText("");
+                    error_label.setText("");
                 } catch (SQLException e) {
                     error_label.setText("ERROR:" + getErrorMessage(e));
                 }
@@ -230,6 +234,7 @@ public class Window extends JFrame {
                             "Showing package IDs of all packages with price >= " + input_price.getText(),
                             join);
                     input_price.setText("");
+                    error_label.setText("");
                 } catch (SQLException e) {
                     error_label.setText("ERROR:" + getErrorMessage(e));
                 }
