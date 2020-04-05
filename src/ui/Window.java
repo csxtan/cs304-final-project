@@ -43,6 +43,8 @@ public class Window extends JFrame {
         this.addWindowListener(new WindowAdapter(){
             public void windowClosing(WindowEvent we){
                 dbHandler.close();
+                System.out.println("Window closed.");
+                System.exit(0);
             }
         });
     }
@@ -193,11 +195,11 @@ public class Window extends JFrame {
     }
 
     private void buildProject() {
-        Screen project = initScreen("Project VEHICLE onto column");
+        Screen project = initScreen("Project TRACKINGINFORMATION onto column");
         ContentPanel cp = project.contentPanel;
 
         try {
-            ResultSet vehicleTable = dbHandler.show("Vehicle");
+            ResultSet vehicleTable = dbHandler.show("TrackingInformation");
             ResultSetMetaData metadata = vehicleTable.getMetaData();
             String columnName;
             for (int i = 1; i <= metadata.getColumnCount(); i++) {

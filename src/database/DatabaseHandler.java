@@ -22,12 +22,13 @@ public class DatabaseHandler {
             // Load the Oracle JDBC driver
             // Note that the path could change for new drivers
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+
+            System.out.println("Connecting to Oracle...");
             login();
-            System.out.println("Connected to Oracle.");
+            System.out.println("Successfully connected.");
             clearDatabase();
-            System.out.println("Existing database cleared.");
+            System.out.println("Database cleaned. Loading new database...");
             loadDatabase();
-            System.out.println("Database loaded.");
         } catch (SQLException e) {
             handleException(e);
         }
@@ -168,9 +169,8 @@ public class DatabaseHandler {
 
     public ResultSet project(String column) throws SQLException {
         PreparedStatement ps = connection.prepareStatement(
-                "SELECT ? FROM TrackingInformation"
+                "SELECT " + column + " FROM TrackingInformation"
         );
-        ps.setString(1, column);
         return ps.executeQuery();
     }
 
@@ -178,7 +178,7 @@ public class DatabaseHandler {
         PreparedStatement ps = connection.prepareStatement(
                 "SELECT Package.package_id, PackagePricing.price FROM Package INNER JOIN PackagePricing " +
                         "ON Package.weight = PackagePricing.weight " +
-                        "AND Package.size = PackagePricing.size " +
+                        "AND Package.packagesize = PackagePricing.packagesize " +
                         "WHERE PackagePricing.price >= ?"
         );
         ps.setString(1, price);
