@@ -227,30 +227,30 @@ public class Window extends JFrame {
     }
 
     private void buildJoin() {
-        Screen join = initScreen("Select from PACKAGE by price (JOIN)");
+        Screen join = initScreen("Join tables");
         ContentPanel cp = join.contentPanel;
-        cp.addText("Get the package IDs of all packages above a price threshold");
+        cp.addText("Join table Drives to:");
 
-        JTextField input_price = cp.addTextField("Price threshold", 10);
+        JButton deliveryWorker = new JButton("DeliveryWorker");
+        JButton vehicle = new JButton("Vehicle");
+        cp.add(deliveryWorker);
+        cp.add(vehicle);
 
-        JButton submit = new JButton("Submit");
-        cp.add(submit);
-        JLabel error_label = cp.addText(" ");
+        deliveryWorker.addActionListener((ActionEvent ae) -> {
+            try {
+                ResultSet table = dbHandler.join("DeliveryWorker");
+                renderTable(table, "Showing inner join of Drives with DeliveryWorker", join);
+            } catch (SQLException e) {
+                exitOnError(e);
+            }
+        });
 
-        submit.addActionListener((ActionEvent ae) -> {
-            if (isNonnegativeInteger(input_price.getText())) {
-                try {
-                    ResultSet table = dbHandler.join(input_price.getText());
-                    renderTable(table,
-                            "Showing package IDs of all packages with price >= " + input_price.getText(),
-                            join);
-                    input_price.setText("");
-                    error_label.setText("");
-                } catch (SQLException e) {
-                    error_label.setText("ERROR:" + getErrorMessage(e));
-                }
-            } else {
-                error_label.setText("ERROR: price threshold must be a nonnegative integer.");
+        vehicle.addActionListener((ActionEvent ae) -> {
+            try {
+                ResultSet table = dbHandler.join("Vehicle");
+                renderTable(table, "Showing inner join of Drives with Vehicle", join);
+            } catch (SQLException e) {
+                exitOnError(e);
             }
         });
     }

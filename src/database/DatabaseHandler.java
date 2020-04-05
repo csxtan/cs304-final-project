@@ -174,14 +174,21 @@ public class DatabaseHandler {
         return ps.executeQuery();
     }
 
-    public ResultSet join(String price) throws SQLException {
-        PreparedStatement ps = connection.prepareStatement(
-                "SELECT Package.package_id, PackagePricing.price FROM Package INNER JOIN PackagePricing " +
-                        "ON Package.weight = PackagePricing.weight " +
-                        "AND Package.packagesize = PackagePricing.packagesize " +
-                        "WHERE PackagePricing.price >= ?"
-        );
-        ps.setString(1, price);
+    public ResultSet join(String joinTable) throws SQLException {
+        PreparedStatement ps;
+        if (joinTable.equals("DeliveryWorker")) {
+            ps = connection.prepareStatement(
+                    "SELECT DeliveryWorker.employee_id, name, collection_location, vehicle_id " +
+                            "FROM Drives INNER JOIN DeliveryWorker " +
+                            "ON Drives.employee_id = DeliveryWorker.employee_id"
+            );
+        } else {
+            ps = connection.prepareStatement(
+                    "SELECT Vehicle.vehicle_id, vehicle_location, employee_id " +
+                            "FROM Drives INNER JOIN Vehicle " +
+                            "ON Drives.vehicle_id = Vehicle.vehicle_id"
+            );
+        }
         return ps.executeQuery();
     }
 
