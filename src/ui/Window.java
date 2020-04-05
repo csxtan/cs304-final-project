@@ -5,6 +5,8 @@ import database.DatabaseHandler;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -36,6 +38,13 @@ public class Window extends JFrame {
 
         setContentPane(menu);
         setVisible(true);
+
+        // When window is closed, close the database connection
+        this.addWindowListener(new WindowAdapter(){
+            public void windowClosing(WindowEvent we){
+                dbHandler.close();
+            }
+        });
     }
 
     private void buildMenu() {

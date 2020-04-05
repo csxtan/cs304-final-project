@@ -82,6 +82,18 @@ public class DatabaseHandler {
     }
 
 
+    // Close database
+    public void close() {
+        try {
+            if (connection != null) {
+                connection.close();
+            }
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+    }
+
+
     // Returns LinkedList of all table names
     public LinkedList<String> getTables() {
         try {
